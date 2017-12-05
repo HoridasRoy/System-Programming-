@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <pthread.h>
 
+int x = 10;
 
 void *sum1()
 {
 	while(1)
 	{
-		printf("I am number 1");
+		printf("I am number 1\n");
 	}
 }
 
@@ -14,7 +15,7 @@ void *sum2()
 {
 	while(1)
 	{
-		printf("I am number 2");
+		printf("I am number 2\n");
 	}
 }
 
@@ -22,7 +23,7 @@ void *sum3()
 {
 	while(1)
 	{
-		printf("I am number 3");
+		printf("I am number 3\n");
 	}
 }
 
@@ -30,7 +31,7 @@ void *sum4()
 {
 	while(1)
 	{
-		printf("I am number 4");
+		printf("I am number 4\n");
 	}
 }
 
@@ -38,7 +39,7 @@ void *sum5()
 {
 	while(1)
 	{
-		printf("I am number 5");
+		printf("I am number 5\n");
 	}
 }
 
@@ -47,6 +48,9 @@ int main()
 	/* code */
 
 	//sum();
+
+
+
 
 	int tdstatus;
 
@@ -60,6 +64,9 @@ int main()
 
 		return 1;
 	}
+
+	x = 100;
+	printf("%d\n", x);
 
 	pthread_t TID2;
 
