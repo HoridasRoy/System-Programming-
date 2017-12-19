@@ -95,6 +95,8 @@
 */
 int a;
 
+pthread_mutex_t key;
+
 /* =========== Thread Functions ============== */
 void *thread1 (void *arg) {
 	/* 
@@ -120,11 +122,15 @@ void *thread1 (void *arg) {
 			printf("%d. I am Thread-1. My task is to increase a. After (a++): %d\n", i, a);
 			-------------------------------------------------------
 		*/
+		pthread_mutex_lock(&key);
+
 		sprintf(msg, "%d. I am Thread-1. My task is to increase a. Before (a = a + 1): %d\n", i, a);	
 		write(1, msg, strlen(msg) + 1);
 		a = a + 1;
 		sprintf(msg, "%d. I am Thread-1. My task is to increase a. After (a = a + 1): %d\n", i, a);
 		write(1, msg, strlen(msg) + 1);
+		pthread_mutex_unlock(&key);
+
 	}	
 }
 
@@ -137,11 +143,16 @@ void *thread2 (void *arg) {
 	char msg[MSG_SZ];	
 
 	for (i = 1; i <= N; i++) {
+
+		pthread_mutex_lock(&key);
+
 		sprintf(msg, "%d. I am Thread-2. My task is to decrease a. Before (a = a - 1): %d\n", i, a);	
 		write(1, msg, strlen(msg) + 1);
 		a = a - 1;
 		sprintf(msg, "%d. I am Thread-2. My task is to decrease a. After (a = a - 1): %d\n", i, a);
 		write(1, msg, strlen(msg) + 1);
+		pthread_mutex_unlock(&key);
+
 	}	
 }
 
@@ -181,6 +192,11 @@ int main() {
 	for(i = 1; i <= N; i++){
 		sprintf(msg, "%d. I am Main Thread. I am not changing a. I found a: %d\n", i, a);
 		write(1, msg, strlen(msg) + 1);
+	}
+
+	while(1)
+	{
+
 	}
 
 	exit(EXIT_SUCCESS);	// similar to "return 0;"
